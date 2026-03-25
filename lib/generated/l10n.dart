@@ -248,6 +248,106 @@ class S {
   String get next {
     return Intl.message('Next', name: 'next', desc: '', args: []);
   }
+
+  /// `About Us`
+  String get aboutUs {
+    return Intl.message('About Us', name: 'aboutUs', desc: '', args: []);
+  }
+
+  /// `Reviews`
+  String get reviews {
+    return Intl.message('Reviews', name: 'reviews', desc: '', args: []);
+  }
+
+  /// `Store Details`
+  String get storeDetails {
+    return Intl.message(
+      'Store Details',
+      name: 'storeDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product Details`
+  String get productDetails {
+    return Intl.message(
+      'Product Details',
+      name: 'productDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add to Card`
+  String get addToCard {
+    return Intl.message('Add to Card', name: 'addToCard', desc: '', args: []);
+  }
+
+  /// `Profile`
+  String get profile {
+    return Intl.message('Profile', name: 'profile', desc: '', args: []);
+  }
+
+  /// `Manage Address`
+  String get manageAddress {
+    return Intl.message(
+      'Manage Address',
+      name: 'manageAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add New`
+  String get addNew {
+    return Intl.message('Add New', name: 'addNew', desc: '', args: []);
+  }
+
+  /// `Add New Address`
+  String get addNewAddress {
+    return Intl.message(
+      'Add New Address',
+      name: 'addNewAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address`
+  String get address {
+    return Intl.message('Address', name: 'address', desc: '', args: []);
+  }
+
+  /// `Delivery Instruction`
+  String get deliveryInstruction {
+    return Intl.message(
+      'Delivery Instruction',
+      name: 'deliveryInstruction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `State`
+  String get state {
+    return Intl.message('State', name: 'state', desc: '', args: []);
+  }
+
+  /// `City`
+  String get city {
+    return Intl.message('City', name: 'city', desc: '', args: []);
+  }
+
+  /// `Enter Unit Number`
+  String get enterUnitNumber {
+    return Intl.message(
+      'Enter Unit Number',
+      name: 'enterUnitNumber',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

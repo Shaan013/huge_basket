@@ -19,8 +19,8 @@ class ChooseCategory extends StatelessWidget {
   });
 
   void handleValue(CategoryEnum cat) {
+    index.value = cat;
     onChange?.call(cat);
-
   }
 
   @override
@@ -54,14 +54,16 @@ class ChooseCategory extends StatelessWidget {
 
                 return ValueListenableBuilder<CategoryEnum>(
                   valueListenable: index,
-                  builder: (BuildContext context, CategoryEnum value, Widget? child) {
+                  builder: (context, selectedValue, _) {
+                    final bool isSelected = selectedValue.index == itemIndex;
+
                     return GestureDetector(
-                      onTap: () => handleValue(value),
+                      onTap: () => handleValue(CategoryEnum.values[itemIndex]),
                       child: circlePng(
                         textTheme,
                         imagUrl: item.image,
                         name: item.name,
-                        isSelected: (index.value == itemIndex),
+                        isSelected: isSelected,
                       ),
                     );
                   },

@@ -8,7 +8,7 @@ Widget smallIconsBadge({
   Color? iconColor,
 }) {
   if (count == null || count == 0) {
-   return Icon(icons);
+    return Icon(icons, color: iconColor);
   } else {
     return Badge.count(
       backgroundColor: bgColor ?? AppColors.seedColor,

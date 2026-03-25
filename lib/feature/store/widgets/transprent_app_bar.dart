@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:huge_basket/core/widgets/cart_widget.dart';
 
+import '../../../core/theme/app_colors.dart';
 import '../../../core/widgets/back_button.dart';
-import '../../../core/widgets/smail_icon_with_badge.dart';
 
 PreferredSizeWidget storeAppBar(
   BuildContext context, {
   required String title,
+  Color color = AppColors.black,
   IconData? icon,
   int? count,
 }) => AppBar(
@@ -21,11 +23,5 @@ PreferredSizeWidget storeAppBar(
     style: TextTheme.of(context).headlineSmall!.copyWith(color: Colors.white),
     maxLines: 1,
   ),
-  actions: [
-    smallIconsBadge(
-      icons: icon ?? Icons.shopping_cart,
-      count: count ?? 2,
-      iconColor: Colors.white,
-    ),
-  ],
+  actions: [cartIcon(context, iconColor: Colors.white)],
 );

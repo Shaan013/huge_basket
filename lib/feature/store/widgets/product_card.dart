@@ -1,81 +1,153 @@
 import 'package:flutter/material.dart';
-import 'package:huge_basket/feature/store/view_model/product_model.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:huge_basket/core/routes/app_route.dart';
+import 'package:huge_basket/date/modals/address_model.dart';
+import 'package:huge_basket/date/provider/provider_carts.dart';
+import 'package:huge_basket/date/services/cart_services.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/theme/app_edge_insets.dart';
+import '../../../core/widgets/cart_product_quantity_widget.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
 
-  // final
   const ProductCard({super.key, required this.product});
+
+  void goToNextPage(BuildContext context) {
+    Navigator.pushNamed(context, AppRoute.productDetails, arguments: product);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = TextTheme.of(context);
-    return Stack(
-      children: [
-        Container(
-          width: 160,
+    final int currentQuantity = CartServices.getQuantityById(
+      context,
+      productId: product.id,
+    );
 
-          padding: AppEdgeInsets.m,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            children: [
-              Image.network(product.imageUrl),
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      "\$ ${product.price}",
-                      style: textTheme.bodyMedium!.copyWith(fontWeight: .w600),
-                    ),
-                  ),
-                  Text(product.wight),
-                ],
-              ),
-              Expanded(child: Text(product.name, maxLines: 2)),
-            ],
+    final isInCart = currentQuantity != 0;
+    final textTheme = Theme.of(context).textTheme;
+    return GestureDetector(
+      onTap: () => goToNextPage(context),
+      child: Container(
+        width: 160.w,
+        padding: AppEdgeInsets.s,
+        decoration: mainContainerdecoration(),
+        child: Stack(
+          children: [
+            buildShowProductDetitle(textTheme),
+            Align(
+              alignment: .topRight,
+              child: buildQuantityCounter(isInCart, context, currentQuantity),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Visibility buildQuantityCounter(
+    bool isInCart,
+    BuildContext context,
+    int currentQuantity,
+  ) {
+    return Visibility(
+      visible: !isInCart,
+      replacement: quantityCountContainer(
+        context,
+        quantity: currentQuantity,
+        product: product,
+      ),
+      child: addCountButton(context),
+    );
+  }
+
+  Column buildShowProductDetitle(TextTheme textTheme) {
+    return Column(
+      children: [
+        Expanded(
+          child: Image.network(
+            product.imageUrl,
+            // height: 100,
+            fit: BoxFit.contain,
           ),
         ),
-        Positioned(top: 8, right: 8, child: addButton(context)),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                "\$ ${product.price}",
+                style: textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.w600,
+                ), // Fixed
+              ),
+            ),
+            Text(product.weight),
+          ],
+        ),
+        const SizedBox(height: 5),
+        Text(
+          product.name,
+          style: textTheme.bodyLarge,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
       ],
     );
   }
 
-  Widget addButton(BuildContext context) {
-bool isVisible=false;
-    return Visibility(replacement: Container(
-      decoration: BoxDecoration(
-          shape:.circle,
-        color: Theme.of(context).colorScheme.primaryContainer
-      ),
-    ), child:
-    Container(
-      width: 45,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(
-          color: Theme.of(context).colorScheme.primary
-        ),
-        borderRadius: BorderRadius.circular(40),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: const [
-          Icon(Icons.add, size: 26),
-          SizedBox(height: 10),
-          Text(
-            "1",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 10),
-          Icon(Icons.delete, color: Colors.red, size: 26),
-        ],
-      ),
-    ),);
+  BoxDecoration mainContainerdecoration() {
+    return BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(8),
+      boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
+    );
   }
+
+  Widget addCountButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () => context.read<ProviderCarts>().incrementQuantity(product),
+      child: Container(
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle, // Fixed
+          color: Theme.of(context).colorScheme.primaryContainer,
+        ),
+        child: const Icon(Icons.add, size: 24),
+      ),
+    );
+  }
+
+  // Widget quantityCountContainer(BuildContext context, int quantity) {
+  //   final cartProvider = context.read<ProviderCarts>();
+  //
+  //   return Container(
+  //     width: 45,
+  //     padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+  //     decoration: AppBoxDecoration.cartCounterBox(context),
+  //     child: Column(
+  //       mainAxisSize: MainAxisSize.min,
+  //       children: [
+  //         GestureDetector(
+  //           onTap: () => cartProvider.incrementQuantity(product),
+  //           child: const Icon(Icons.add, size: 20),
+  //         ),
+  //         const SizedBox(height: 8),
+  //         Text(
+  //           quantity.toString(),
+  //           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+  //         ),
+  //         const SizedBox(height: 8),
+  //         GestureDetector(
+  //           onTap: () => cartProvider.decrementQuantity(product),
+  //           child: Icon(
+  //             quantity <= 1 ? Icons.delete : Icons.remove,
+  //             color: quantity <= 1 ? Colors.red : Colors.black,
+  //             size: 20,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

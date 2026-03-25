@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:huge_basket/core/theme/app_out_line_border.dart';
 import 'package:huge_basket/date/defData/category_list.dart';
 import 'package:huge_basket/date/defData/category_map.dart';
-import 'package:huge_basket/date/defData/dairy_eggs_map.dart';
 import 'package:huge_basket/feature/store/view_model/category_enum.dart';
 import 'package:huge_basket/feature/store/widgets/category_product.dart';
 import 'package:huge_basket/feature/store/widgets/choose_category.dart';
@@ -22,30 +21,40 @@ class ShoppingPage extends StatefulWidget {
 class _ShoppingPageState extends State<ShoppingPage> {
   late HomeListModel model =
       ModalRoute.of(context)!.settings.arguments as HomeListModel;
-  final ValueNotifier<CategoryEnum> chooseCategoryIndex = ValueNotifier(CategoryEnum.dairyEggs);
+
+  final ValueNotifier<CategoryEnum> chooseCategoryIndex =
+      ValueNotifier<CategoryEnum>(CategoryEnum.dairyEggs);
 
   @override
   Widget build(BuildContext context) {
+    // print("object");
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
             upperSection(context),
             10.verticalSpace,
-            ChooseCategory(index: chooseCategoryIndex, list: categoryList, onChange: (CategoryEnum value) {  },),
+            ChooseCategory(
+              index: chooseCategoryIndex,
+              list: categoryList,
+              onChange: (CategoryEnum value) {},
+            ),
             10.verticalSpace,
-            ...categoryMap[CategoryEnum.dairyEggs]!.entries.map((intem) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ColoredBox(
-                  color: Colors.red,
-                  child: SizedBox(height: 10, width: 10),
-                ),
-              );
-            }).toList(),
-            CategoryProduct(
-              productList: dairyEggsMap['Milk'] ?? [],
-              sectionName: "Milk",
+            ValueListenableBuilder<CategoryEnum>(
+              valueListenable: chooseCategoryIndex,
+              builder: (context, currentCategory, _) {
+                final subCategoryMap = categoryMap[currentCategory];
+                if (subCategoryMap == null) return const SizedBox();
+                return Column(
+                  spacing: 10,
+                  children: subCategoryMap.entries.map((entry) {
+                    return CategoryProduct(
+                      productList: entry.value, // The list of products
+                      sectionName: entry.key, // The name (e.g., "Milk")
+                    );
+                  }).toList(),
+                );
+              },
             ),
           ],
         ),
@@ -60,8 +69,9 @@ class _ShoppingPageState extends State<ShoppingPage> {
         spacing: 10.r,
         children: [
           storeAppBar(context, title: model.title),
-          ClipOval(
-            child: Image.network(model.image, height: 80.r, width: 80.r),
+
+          Expanded(
+            child: ClipOval(child: Image.network(model.image, fit: .fill)),
           ),
           Text(
             model.address,

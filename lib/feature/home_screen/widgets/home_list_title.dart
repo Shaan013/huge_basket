@@ -25,12 +25,14 @@ class HomeListTitle extends StatelessWidget {
               label: Row(
                 spacing: 3.r,
                 children: [
-                  Expanded(child: Icon(Icons.star, size: 16.r,color:AppColors.white,)),
+                  Expanded(
+                    child: Icon(Icons.star, size: 16.r, color: AppColors.white),
+                  ),
                   Text(
                     model.rating.toString(),
-                    style: TextTheme.of(context).titleSmall!.copyWith(
-                      color: AppColors.white
-                    ),
+                    style: TextTheme.of(
+                      context,
+                    ).titleSmall!.copyWith(color: AppColors.white),
                     maxLines: 1,
                   ),
                 ],
@@ -44,8 +46,14 @@ class HomeListTitle extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Expanded(child: Text(model.title, style: textTheme.titleLarge, maxLines: 1)),
-                      Text(model.distance, maxLines: 1)
+                      Expanded(
+                        child: Text(
+                          model.title,
+                          style: textTheme.titleLarge,
+                          maxLines: 1,
+                        ),
+                      ),
+                      Text(model.distance, maxLines: 1),
                     ],
                   ),
                   Text(model.category, maxLines: 1),
@@ -53,10 +61,6 @@ class HomeListTitle extends StatelessWidget {
                 ],
               ),
             ),
-            // Column(
-            //   mainAxisAlignment: .start,
-            //   children: [Text(model.distance, maxLines: 1)],
-            // ),
           ],
         ),
       ),

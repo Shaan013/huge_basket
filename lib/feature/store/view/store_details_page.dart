@@ -6,6 +6,7 @@ import 'package:huge_basket/feature/home_screen/view_model/home_list_model.dart'
 import 'package:huge_basket/feature/home_screen/widgets/home_list_title.dart';
 import 'package:huge_basket/feature/store/widgets/reviews_page.dart';
 
+import '../../../generated/l10n.dart';
 import '../widgets/transprent_app_bar.dart';
 
 class StoreDetailsPage extends StatefulWidget {
@@ -21,13 +22,6 @@ class _StoreDetailsPageState extends State<StoreDetailsPage> {
 
   late HomeListModel model =
       ModalRoute.of(context)!.settings.arguments as HomeListModel;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // model =
-  }
 
   void handleGoTo() {
     Navigator.pushNamed(context, AppRoute.shoppingPage, arguments: model);
@@ -52,13 +46,10 @@ class _StoreDetailsPageState extends State<StoreDetailsPage> {
 
   Expanded buildTabView() {
     return Expanded(
-            child: TabBarView(
-              children: [
-                Text(decription, maxLines: 20),
-                ReviewsPage(),
-              ],
-            ),
-          );
+      child: TabBarView(
+        children: [Text(decription, maxLines: 20), ReviewsPage()],
+      ),
+    );
   }
 
   Widget uperPart() => Stack(
@@ -69,7 +60,8 @@ class _StoreDetailsPageState extends State<StoreDetailsPage> {
         // clipBehavior: .none,
         height: 300.h,
         decoration: bgImageDecoration(),
-        child: storeAppBar(context, title: "Store Details"),
+
+        child: storeAppBar(context, title: S.of(context).storeDetails,),
       ),
 
       Positioned(
@@ -89,10 +81,8 @@ class _StoreDetailsPageState extends State<StoreDetailsPage> {
   Widget storeTabBar() => Container(
     // height: 50,
     color: Theme.of(context).colorScheme.primary.withAlpha(30),
-    // The light background from your image
     child: Stack(
       children: [
-        // 1. The centered divider
         Align(
           alignment: Alignment.center,
           child: Container(height: 47, width: 1.5, color: Colors.white),
@@ -102,9 +92,9 @@ class _StoreDetailsPageState extends State<StoreDetailsPage> {
           indicatorColor: Colors.transparent,
           labelColor: AppColors.seedColor,
           unselectedLabelColor: Colors.grey,
-          tabs: const [
-            Tab(text: "About Us"),
-            Tab(text: "Reviews"),
+          tabs: [
+            Tab(text: S.of(context).aboutUs),
+            Tab(text: S.of(context).reviews),
           ],
         ),
       ],

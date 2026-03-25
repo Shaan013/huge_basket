@@ -20,7 +20,10 @@ class ReviewsPage extends StatelessWidget {
             Row(
               mainAxisAlignment: .spaceBetween,
               children: [
-                Text(S.of(context).allReviewsReviewcount, style: textTheme.titleLarge),
+                Text(
+                  S.of(context).allReviewsReviewcount,
+                  style: textTheme.titleLarge,
+                ),
                 Text(S.of(context).viewAll, style: textTheme.titleMedium),
               ],
             ),

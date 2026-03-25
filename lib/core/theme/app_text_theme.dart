@@ -92,21 +92,21 @@ class AppTextTheme {
     ),
 
     labelLarge: TextStyle(
-      fontSize: 14.sp,
+      fontSize: 20.sp,
       fontWeight: FontWeight.w500,
       overflow: TextOverflow.ellipsis,
       color: Colors.white,
     ),
 
     labelMedium: TextStyle(
-      fontSize: 12.sp,
+      fontSize: 16.sp,
       fontWeight: FontWeight.w500,
       overflow: TextOverflow.ellipsis,
       color: Colors.white,
     ),
 
     labelSmall: TextStyle(
-      fontSize: 11.sp,
+      fontSize: 12.sp,
       fontWeight: FontWeight.w500,
       overflow: TextOverflow.ellipsis,
       color: Colors.white,
@@ -114,8 +114,6 @@ class AppTextTheme {
   ).apply(
     fontFamily: AppFontFamily.poppins
   );
-
-
 
   static TextTheme darkTextTheme = lightTextTheme.apply(
     bodyColor: Colors.white,

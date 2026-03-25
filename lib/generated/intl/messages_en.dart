@@ -22,8 +22,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "aboutUs": MessageLookupByLibrary.simpleMessage("About Us"),
     "add": MessageLookupByLibrary.simpleMessage("Add"),
     "addMoreDetails": MessageLookupByLibrary.simpleMessage("Add More Details"),
+    "addNew": MessageLookupByLibrary.simpleMessage("Add New"),
+    "addNewAddress": MessageLookupByLibrary.simpleMessage("Add New Address"),
+    "addToCard": MessageLookupByLibrary.simpleMessage("Add to Card"),
+    "address": MessageLookupByLibrary.simpleMessage("Address"),
     "allReviewsReviewcount": MessageLookupByLibrary.simpleMessage(
       "All Reviews",
     ),
@@ -32,7 +37,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "chooseYourCategory": MessageLookupByLibrary.simpleMessage(
       "Choose your Category",
     ),
+    "city": MessageLookupByLibrary.simpleMessage("City"),
+    "deliveryInstruction": MessageLookupByLibrary.simpleMessage(
+      "Delivery Instruction",
+    ),
     "emailAddress": MessageLookupByLibrary.simpleMessage("Email Address"),
+    "enterUnitNumber": MessageLookupByLibrary.simpleMessage(
+      "Enter Unit Number",
+    ),
     "firstName": MessageLookupByLibrary.simpleMessage("First Name"),
     "go": MessageLookupByLibrary.simpleMessage("Go"),
     "helloWorld": MessageLookupByLibrary.simpleMessage("Hello World"),
@@ -40,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "iAgreeToThe": MessageLookupByLibrary.simpleMessage("I agree to The"),
     "lastName": MessageLookupByLibrary.simpleMessage("Last Name"),
     "login": MessageLookupByLibrary.simpleMessage("Login"),
+    "manageAddress": MessageLookupByLibrary.simpleMessage("Manage Address"),
     "more": MessageLookupByLibrary.simpleMessage("More"),
     "naxtDeliveryOnWed14Nov2020": MessageLookupByLibrary.simpleMessage(
       "Naxt delivery on Wed , 14 Nov 2020",
@@ -55,7 +68,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "pleaseEnterPhoneNumber": MessageLookupByLibrary.simpleMessage(
       "Please enter phone number",
     ),
+    "productDetails": MessageLookupByLibrary.simpleMessage("Product Details"),
+    "profile": MessageLookupByLibrary.simpleMessage("Profile"),
+    "reviews": MessageLookupByLibrary.simpleMessage("Reviews"),
     "skip": MessageLookupByLibrary.simpleMessage("Skip"),
+    "state": MessageLookupByLibrary.simpleMessage("State"),
+    "storeDetails": MessageLookupByLibrary.simpleMessage("Store Details"),
     "termsCondition": MessageLookupByLibrary.simpleMessage("Terms & Condition"),
     "verificationCodeHasBeenSendOnYourRegisteredMobileNumber":
         MessageLookupByLibrary.simpleMessage(

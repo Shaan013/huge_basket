@@ -40,6 +40,10 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.20.2
+  provider: ^6.1.5+1
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
 
 
 dev_dependencies:
@@ -47,7 +51,9 @@ dev_dependencies:
     sdk: flutter
 
   flutter_intl:
-  intl_utils: ^2.8.14
+#  intl_utils: ^2.8.14
+  hive_generator: ^2.0.1
+  build_runner:
   #localization
 
 

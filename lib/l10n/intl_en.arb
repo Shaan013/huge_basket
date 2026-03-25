@@ -24,5 +24,19 @@
   "allReviewsReviewcount": "All Reviews",
   "skip": "Skip",
   "go": "Go",
-  "next": "Next"
+  "next": "Next",
+  "aboutUs": "About Us",
+  "reviews": "Reviews",
+  "storeDetails": "Store Details",
+  "productDetails": "Product Details",
+  "addToCard": "Add to Card",
+  "profile": "Profile",
+  "manageAddress": "Manage Address",
+  "addNew": "Add New",
+  "addNewAddress": "Add New Address",
+  "address": "Address",
+  "deliveryInstruction": "Delivery Instruction",
+  "state": "State",
+  "city": "City",
+  "enterUnitNumber": "Enter Unit Number"
 }

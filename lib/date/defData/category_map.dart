@@ -3,7 +3,7 @@ import 'package:huge_basket/date/defData/dairy_eggs_map.dart';
 
 Map<CategoryEnum, Map> categoryMap = {
   CategoryEnum.dairyEggs: dairyEggsMap,
-  CategoryEnum.snacks: snacks,
-  CategoryEnum.frozenFoods: frozenFoods,
-  CategoryEnum.seafood: seafood
+  CategoryEnum.snacks: snackList,
+  CategoryEnum.frozenFoods: frozenfoodList,
+  // CategoryEnum.seafood: seafood
 };

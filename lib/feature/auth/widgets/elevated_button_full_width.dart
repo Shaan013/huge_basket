@@ -16,7 +16,7 @@ Widget fullWidthButton(BuildContext context,{required String text,VoidCallback? 
           ),
           onPressed: onTap ??(){} ,
           child: Text(
-            S.of(context).login,
+            text,
             style: TextTheme.of(context).labelLarge,
           ),
         ),

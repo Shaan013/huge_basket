@@ -5,15 +5,17 @@ import 'package:huge_basket/core/theme/app_out_line_border.dart';
 import 'app_colors.dart';
 
 class AppInputDecoration {
-  static InputDecoration auth({required String prefixText,Widget? prefix,Widget? prefixIcon}) => InputDecoration(
+  static InputDecoration auth({required String prefixText,Widget? prefix,Widget? prefixIcon,Widget? suffix}) => InputDecoration(
     hintText: prefixText,
     // prefix: (needDivider ?? false)?SizedBox(height:13,child: VerticalDivider(),):null,,
 
     prefixIcon: prefixIcon,
     prefix: prefix,
+    suffixIcon: suffix,
+    suffixIconColor: Colors.grey,
     counterText: "",
     filled: true,
-    fillColor: AppColors.gray,
+    fillColor: AppColors.deepGray,
     // enabled: false,
     enabledBorder:AppOutLineBorder.authEnable,
     focusedBorder:AppOutLineBorder.authFocus,
