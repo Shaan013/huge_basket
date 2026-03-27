@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:huge_basket/feature/auth/view/login_page.dart';
 import 'package:huge_basket/feature/auth/view/register_page.dart';
 import 'package:huge_basket/feature/auth/view/varifiication_page.dart';
+import 'package:huge_basket/feature/home_screen/view/log_out_screen.dart';
 import 'package:huge_basket/feature/home_screen/view/my_home_page.dart';
 import 'package:huge_basket/feature/profile_feature/view/screen_add_new_address.dart';
 import 'package:huge_basket/feature/profile_feature/view/screen_manage_address.dart';
@@ -23,6 +24,7 @@ class AppRoute {
   static String productDetails = '/$moreProduct/product_details';
   static String manageAddress= "/profile/manage_Address";
   static String addNewAddress ="$manageAddress/add_new_address";
+  static String logOut ="profile/log_out_screen";
 
   static Map<String, WidgetBuilder> getRoutes() => {
     home: (content) => const MyHomePage(),
@@ -35,6 +37,7 @@ class AppRoute {
     moreProduct: (context) => const MoreProductPage(),
     productDetails: (context) => const ProductDetailPage(),
     manageAddress :(context)=> const ScreenManageAddress(),
-    addNewAddress :(context )=>const ScreenAddNewAddress()
+    addNewAddress :(context )=>const ScreenAddNewAddress(),
+    logOut :(context)=>const LogOutScreen(),
   };
 }

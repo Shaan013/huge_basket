@@ -1,3 +1,4 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:huge_basket/core/routes/app_route.dart';
@@ -107,13 +108,24 @@ class ProductCard extends StatelessWidget {
   Widget addCountButton(BuildContext context) {
     return GestureDetector(
       onTap: () => context.read<ProviderCarts>().incrementQuantity(product),
-      child: Container(
-        padding: const EdgeInsets.all(4),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle, // Fixed
-          color: Theme.of(context).colorScheme.primaryContainer,
+      child: DottedBorder(
+        options: CircularDottedBorderOptions(
+          color: Theme.of(context).colorScheme.primary,
+          borderPadding: EdgeInsets.all(1.5),
+          // padding: EdgeInsets.all(2),
+          strokeWidth: 1.5,
+          dashPattern: [8, 4],
         ),
-        child: const Icon(Icons.add, size: 24),
+        child: Container(
+          padding: const EdgeInsets.all(2),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Theme.of(
+              context,
+            ).colorScheme.primaryContainer.withAlpha(110),
+          ),
+          child: const Icon(Icons.add, size: 24),
+        ),
       ),
     );
   }

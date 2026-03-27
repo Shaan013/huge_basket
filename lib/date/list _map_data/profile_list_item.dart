@@ -19,5 +19,5 @@ List<ProfileCard> profileItemList = [
   ProfileCard(icon: Icons.file_copy_outlined, name: "Terms and conditions"),
   ProfileCard(icon: Icons.privacy_tip_outlined, name: "Privacy Policy"),
   ProfileCard(icon: Icons.contact_page_outlined, name: "Contact Us"),
-  ProfileCard(icon: Icons.logout, name: "Logout"),
+  ProfileCard(icon: Icons.logout, name: "Logout",route: AppRoute.logOut),
 ];

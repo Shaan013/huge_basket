@@ -20,6 +20,8 @@ class ScreenAddNewAddress extends StatefulWidget {
 
 class _ScreenAddNewAddressState extends State<ScreenAddNewAddress> {
   late ServiceAddress bd;
+  bool isEdit = false;
+  int? oldKey;
   final _formKey = GlobalKey<FormState>();
   final _addressController = TextEditingController();
   final _unitNoController = TextEditingController();
@@ -30,31 +32,63 @@ class _ScreenAddNewAddressState extends State<ScreenAddNewAddress> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     bd = ServiceAddress();
   }
 
+  void putData(ModelAddress address) {
+    _addressController.text = address.address;
+    _unitNoController.text = address.unitNo;
+    _cityController.text = address.city;
+    _stateController.text = address.state;
+    _zipcodeController.text = address.zipcode;
+    _deliveryInstructionController.text = address.instruction;
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    final Map<int, ModelAddress>? arg =
+        ModalRoute.of(context)?.settings.arguments as Map<int, ModelAddress>?;
+    if (arg != null && isEdit == false) {
+      final ModelAddress oldAddress = arg.values.first;
+      oldKey = arg.keys.first;
+      print("${oldAddress.unitNo}");
+      putData(oldAddress);
+      isEdit = true;
+    }
+  }
+
+  ModelAddress getCurrentAddress() {
+    return ModelAddress(
+      _addressController.text,
+      _unitNoController.text,
+      _cityController.text,
+      _stateController.text,
+      _zipcodeController.text,
+      _deliveryInstructionController.text,
+    );
+  }
+
   Future<void> handletrySubmit() async {
     final res = _formKey.currentState!.validate();
+    print("res: $res");
     if (res) {
-      bd.addAddress(
-        ModelAddress(
-          _addressController.text,
-          _unitNoController.text,
-          _cityController.text,
-          _stateController.text,
-          _zipcodeController.text,
-          _deliveryInstructionController.text,
-        ),
-      );
+      print("isEdit :$isEdit");
+      if (isEdit == true) {
+        bd.uploadChange(newAddress: getCurrentAddress(), index: oldKey!);
+      } else {
+        await bd.addAddress(getCurrentAddress());
+      }
+      Navigator.pop(context, false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppBar(context, title: S.of(context).addNewAddress),
+      appBar: myAppBar(context, title:!isEdit? S.of(context).addNewAddress:"Edit Address"),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -142,7 +176,7 @@ class _ScreenAddNewAddressState extends State<ScreenAddNewAddress> {
               padding: AppEdgeInsets.m,
               child: fullWidthButton(
                 context,
-                text: S.of(context).add,
+                text: !isEdit ? S.of(context).add : "Update",
                 onTap: handletrySubmit,
               ),
             ),

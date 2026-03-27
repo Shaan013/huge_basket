@@ -10,10 +10,12 @@ PreferredSizeWidget myAppBar(
   Widget? leading,
   Color? bgColor,
 }) {
+  final canPoP = Navigator.canPop(context);
+  Widget defLeading() => canPoP ? backButton(context) : SizedBox();
   final textTheme = Theme.of(context).textTheme;
   return AppBar(
     backgroundColor: bgColor ?? AppColors.white,
-    leading: leading ?? backButton(context),
+    leading: leading ?? defLeading(),
     centerTitle: true,
     actionsPadding: EdgeInsetsGeometry.symmetric(horizontal: 20),
     actions: action,

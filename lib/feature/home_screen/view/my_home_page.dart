@@ -37,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Align homeBottomBar(BuildContext context) {
+
     return Align(
       alignment: .bottomCenter,
       child: BottomNavigationBar(

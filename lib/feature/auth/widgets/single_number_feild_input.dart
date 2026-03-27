@@ -179,7 +179,7 @@ class _SingleNumberFieldInputState extends State<SingleNumberFieldInput> {
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(50)),
             hintText: "-",
             filled: true,
-            fillColor: AppColors.gray,
+            fillColor: AppColors.deepGray,
             enabledBorder: AppOutLineBorder.authEnable,
             focusedBorder: AppOutLineBorder.authFocus,
             counterText: "",

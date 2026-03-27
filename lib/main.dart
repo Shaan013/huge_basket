@@ -8,6 +8,7 @@ import 'package:huge_basket/core/routes/app_route.dart';
 import 'package:huge_basket/core/theme/app_theme.dart';
 import 'package:huge_basket/date/modals/db/model_address.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'date/provider/provider_carts.dart';
 import 'generated/l10n.dart';
@@ -19,17 +20,22 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ModelAddressAdapter());
   Hive.openBox<ModelAddress>("addresses");
+  final pref = await SharedPreferences.getInstance();
+  final bool isLogedIn = pref.getBool("isLogedIn") ?? false;
 
+  print("is logedin : $isLogedIn");
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]).then((_) {
-    runApp(const MyApp());
+    runApp(MyApp(isLogedIn: isLogedIn));
   });
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLogedIn;
+
+  const MyApp({super.key, required this.isLogedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +58,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: "Huge Basket",
             theme: appTheme,
-            initialRoute: AppRoute.home,
+            initialRoute: !isLogedIn ? AppRoute.tutorial : AppRoute.home,
             routes: AppRoute.getRoutes(),
             // home: const MyHomePage(title: 'Flutter Demo Home Page'),
           ),

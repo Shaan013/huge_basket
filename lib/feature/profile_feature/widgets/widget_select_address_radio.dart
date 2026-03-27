@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:huge_basket/core/routes/app_route.dart';
 import 'package:huge_basket/date/modals/db/model_address.dart';
 import 'package:huge_basket/feature/profile_feature/view/service_address.dart';
+import 'package:huge_basket/core/widgets/alert_dailog.dart';
 
-import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_edge_insets.dart';
+import 'address_card.dart';
 
 class WidgetSelectAddressRadio extends StatefulWidget {
   final ValueChanged<String> selectedAddress;
@@ -22,14 +23,16 @@ class _WidgetSelectAddressRadioState extends State<WidgetSelectAddressRadio> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     serviceAddress = ServiceAddress();
   }
 
-  void deleteAddress(ModelAddress address) async {
-    print("object");
-     serviceAddress.deleteAdd(address);
+  void deleteAddress(int index) async {
+    alertDailog(
+      context,
+      message: "Do you want Delete Address",
+      onAgree: () => serviceAddress.deleteAdd(index),
+    );
   }
 
   Future<List<ModelAddress>> getAddress() async {
@@ -38,6 +41,7 @@ class _WidgetSelectAddressRadioState extends State<WidgetSelectAddressRadio> {
 
   @override
   Widget build(BuildContext context) {
+    // serviceAddress.clearAll();
     return Padding(
       padding: AppEdgeInsets.s,
       child: RadioGroup<String>(
@@ -51,135 +55,45 @@ class _WidgetSelectAddressRadioState extends State<WidgetSelectAddressRadio> {
           stream: serviceAddress.getStreemAddress(),
           initialData: serviceAddress.getallAddressAsync(),
           builder: (context, snapShort) {
-            if(snapShort.hasError){
+            if (snapShort.hasError) {
               return Text("not error ");
             }
             if (snapShort.hasData) {
-              final listData = snapShort.data??[];
-
+              final listData = snapShort.data ?? [];
               if (listData.isEmpty) {
                 return Text(
                   "No Data Found",
                   style: TextTheme.of(context).titleMedium,
                 );
               }
-              return ListView(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                children: List.generate(snapShort.data!.length, (intex) {
-                  final item = listData[intex];
-                  return addressCard(
-                    context,
-                    address: item.getString(),
-                    onDelete: () => deleteAddress(item),
-                  );
-                }),
-              );
+              return buildListView(snapShort, listData, context);
             } else {
               return SizedBox.square(child: CircularProgressIndicator());
             }
           },
         ),
-
-        // FutureBuilder<List<ModelAddress>>(
-        //   future: getAddress(),
-        //   builder: (context, snapShort) {
-        //
-        //   },
-        // ),
       ),
     );
   }
 
-  Card addressCard(
-    BuildContext context, {
-    required String address,
-    VoidCallback? onDelete,
-    VoidCallback? onChange,
-  }) {
-    return Card(
-      clipBehavior: .hardEdge,
-      color: AppColors.white,
-      child: Column(
-        children: [
-          Padding(
-            padding: AppEdgeInsets.m,
-            child: Row(
-              children: [
-                Radio(value: address),
-                Expanded(
-                  child: Text(
-                    address,
-                    style: TextTheme.of(context).titleMedium,
-                    maxLines: 2,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          10.verticalSpace,
-          Divider(height: 1),
-          Row(
-            children: [
-              Expanded(
-                child: _button(
-                  context,
-                  icons: Icons.delete,
-                  label: "Delete",
-                  splashColor: Colors.red.withAlpha(50),
-                  iconColor: AppColors.rad,
-                  onTap: onDelete,
-                ),
-              ),
-              SizedBox(height: 50.h, child: VerticalDivider(width: 1)),
-              Expanded(
-                child: _button(
-                  context,
-                  icons: Icons.edit,
-                  label: "Change",
-                  onTap: () {},
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+  ListView buildListView(
+    AsyncSnapshot<List<ModelAddress>> snapShort,
+    List<ModelAddress> listData,
+    BuildContext context,
+  ) {
+    return ListView(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      children: List.generate(snapShort.data!.length, (intex) {
+        final item = listData[intex];
+        return AddressCard(
+          address: item.getString(),
+          onDelete: () => deleteAddress(intex),
+          onEdit: (){
+            Navigator.pushNamed(context, AppRoute.addNewAddress,arguments: {intex:item});
+          },
+        );
+      }),
     );
   }
-
-  Widget _button(
-    BuildContext context, {
-    required VoidCallback? onTap,
-    required IconData icons,
-    required String label,
-    Color? splashColor,
-    Color? iconColor,
-  }) {
-    return Ink(
-      height: 50.h,
-      child: InkWell(
-        onTap: onTap,
-        splashColor: splashColor,
-        child: Padding(
-          padding: const EdgeInsets.all(8).r,
-          child: Row(
-            mainAxisAlignment: .center,
-            children: [
-              Icon(icons, color: iconColor),
-              10.verticalSpace,
-              Text(
-                label,
-                maxLines: 1,
-                style: TextTheme.of(context).titleMedium,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  // Widget _dialogBox(BuildContext context,{required String address}){
-  //   re
-  // }
 }

@@ -6,6 +6,7 @@ import 'package:huge_basket/core/utils/app_validation.dart';
 import 'package:huge_basket/core/widgets/appbar.dart';
 import 'package:huge_basket/feature/auth/widgets/custom_phone_number.dart';
 import 'package:huge_basket/feature/auth/widgets/elevated_button_full_width.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../generated/l10n.dart';
@@ -48,7 +49,7 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
-  void handleSubmit() {
+  void handleSubmit() async {
     print("in");
     final res = _formKey.currentState!.validate();
     if (chack == false) {
@@ -61,6 +62,8 @@ class _RegisterPageState extends State<RegisterPage> {
       });
     }
     if (res && chack == true) {
+      final pref = await SharedPreferences.getInstance();
+      pref.setBool("isLogedIn", true);
       print("object");
       _formKey.currentState!.save();
       Navigator.pushNamedAndRemoveUntil(
@@ -81,8 +84,13 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             mainAxisAlignment: .spaceBetween,
             children: [
+              20.verticalSpace,
               ragisterForm(context),
-              fullWidthButton(context, text: S.of(context).add, onTap: handleSubmit),
+              fullWidthButton(
+                context,
+                text: S.of(context).add,
+                onTap: handleSubmit,
+              ),
             ],
           ),
         ),
@@ -92,69 +100,62 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Form ragisterForm(BuildContext context) {
     return Form(
-              autovalidateMode: .onUnfocus,
-              key: _formKey,
-              child: Column(
-                spacing: 20.h,
-                children: [
-                  TextFormField(
-                    validator: (value) =>
-                        ValidationHelper.validateName(value),
-                    controller: _nameController,
-                    decoration: AppInputDecoration.auth(
-                      prefixText: S.of(context).businessName,
-                    ),
-                  ),
-                  TextFormField(
-                    validator: (value) =>
-                        ValidationHelper.validateName(value),
-                    controller: _fNameController,
-                    decoration: AppInputDecoration.auth(
-                      prefixText: S.of(context).firstName,
-                    ),
-                  ),
-                  TextFormField(
-                    validator: (value) =>
-                        ValidationHelper.validateName(value),
-                    controller: _lNameController,
-                    decoration: AppInputDecoration.auth(
-                      prefixText: S.of(context).lastName,
-                    ),
-                  ),
-                  TextFormField(
-                    validator: (value) =>
-                        ValidationHelper.validateEmail(value),
-                    controller: _emailController,
-                    decoration: AppInputDecoration.auth(
-                      prefixText: S.of(context).emailAddress,
-                    ),
-                  ),
-                  CustomPhoneField(controller: _phoneController),
-                  TextFormField(
-                    keyboardType: .numberWithOptions(
-                      signed: false,
-                      decimal: false,
-                    ),
-                    validator: (value) => ValidationHelper.noEmpty(value),
-                    controller: _zipCodeController,
-                    decoration: AppInputDecoration.auth(
-                      prefixText: S.of(context).zipcode,
-                    ),
-                  ),
-                  tcChackBox(context),
-                  if (checkError)
-                    Text(
-                      S.of(context).pleaseAgreeWihtTc,
-                      style: TextTheme.of(context).bodyMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.error,
-                      ),
-                    ),
-                  // Row(children: [
-                  //   Text("🇮🇳")
-                  // ]),
-                ],
+      autovalidateMode: .onUnfocus,
+      key: _formKey,
+      child: Column(
+        spacing: 20.h,
+        children: [
+          TextFormField(
+            validator: (value) => ValidationHelper.validateName(value),
+            controller: _nameController,
+            decoration: AppInputDecoration.auth(
+              prefixText: S.of(context).businessName,
+            ),
+          ),
+          TextFormField(
+            validator: (value) => ValidationHelper.validateName(value),
+            controller: _fNameController,
+            decoration: AppInputDecoration.auth(
+              prefixText: S.of(context).firstName,
+            ),
+          ),
+          TextFormField(
+            validator: (value) => ValidationHelper.validateName(value),
+            controller: _lNameController,
+            decoration: AppInputDecoration.auth(
+              prefixText: S.of(context).lastName,
+            ),
+          ),
+          TextFormField(
+            validator: (value) => ValidationHelper.validateEmail(value),
+            controller: _emailController,
+            decoration: AppInputDecoration.auth(
+              prefixText: S.of(context).emailAddress,
+            ),
+          ),
+          CustomPhoneField(controller: _phoneController),
+          TextFormField(
+            keyboardType: .numberWithOptions(signed: false, decimal: false),
+            validator: (value) => ValidationHelper.noEmpty(value),
+            controller: _zipCodeController,
+            decoration: AppInputDecoration.auth(
+              prefixText: S.of(context).zipcode,
+            ),
+          ),
+          tcChackBox(context),
+          if (checkError)
+            Text(
+              S.of(context).pleaseAgreeWihtTc,
+              style: TextTheme.of(context).bodyMedium!.copyWith(
+                color: Theme.of(context).colorScheme.error,
               ),
-            );
+            ),
+          // Row(children: [
+          //   Text("🇮🇳")
+          // ]),
+        ],
+      ),
+    );
   }
 
   Text tcChackBox(BuildContext context) {

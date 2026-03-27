@@ -19,7 +19,6 @@ class ScreenManageAddress extends StatelessWidget {
       Navigator.pushNamed(context, AppRoute.addNewAddress);
     }
 
-    // print("object");
     return Scaffold(
       appBar: myAppBar(context, title: S.of(context).manageAddress),
       body: ListView(
